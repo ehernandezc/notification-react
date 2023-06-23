@@ -1,4 +1,3 @@
-
 class ApiClient {
   private baseURL: string | undefined;
   private defaultHeaders: Record<string, string>;
@@ -15,6 +14,11 @@ class ApiClient {
       method: 'GET',
       headers: this.defaultHeaders,
     });
+
+    if (!response.ok) {
+      throw new Error(`GET request to ${url} failed with status ${response.status}`);
+    }
+
     return response.json() as Promise<T>;
   }
 
@@ -24,6 +28,11 @@ class ApiClient {
       headers: this.defaultHeaders,
       body: JSON.stringify(body),
     });
+
+    if (!response.ok) {
+      throw new Error(`POST request to ${url} failed with status ${response.status}`);
+    }
+
     return response.json() as Promise<T>;
   }
 
@@ -33,6 +42,11 @@ class ApiClient {
       headers: this.defaultHeaders,
       body: JSON.stringify(body),
     });
+
+    if (!response.ok) {
+      throw new Error(`PUT request to ${url} failed with status ${response.status}`);
+    }
+
     return response.json() as Promise<T>;
   }
 
@@ -42,6 +56,11 @@ class ApiClient {
       headers: this.defaultHeaders,
       body: JSON.stringify(body),
     });
+
+    if (!response.ok) {
+      throw new Error(`PATCH request to ${url} failed with status ${response.status}`);
+    }
+
     return response.json() as Promise<T>;
   }
 
@@ -50,6 +69,11 @@ class ApiClient {
       method: 'DELETE',
       headers: this.defaultHeaders,
     });
+
+    if (!response.ok) {
+      throw new Error(`DELETE request to ${url} failed with status ${response.status}`);
+    }
+
     return response.json() as Promise<T>;
   }
 }
@@ -58,4 +82,4 @@ const client = new ApiClient();
 
 export {
   client as ApiClient,
-}
+};

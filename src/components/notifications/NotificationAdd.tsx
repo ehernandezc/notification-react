@@ -42,11 +42,15 @@ export const NotificationAdd = () => {
       dispatch(addNotification({
         categoryId:  parseInt(values.categoryId),
         message: values.message,
-      }));
-
-      dispatch(setSnackBar({ message: 'Notifications were sent!' }));
-      resetForm();
-      navigate('/');
+      })).then((resp: any) => {
+        if (!resp.error) {
+          dispatch(setSnackBar({ message: 'Notifications were sent!' }));
+          resetForm();
+          navigate('/');
+        } else {
+          dispatch(setSnackBar({ message: 'Notification could not be sent', severity: 'error' }));
+        }
+      });
     }
   });
 
